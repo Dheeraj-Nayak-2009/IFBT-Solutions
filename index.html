@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Kids Chat Bot</title>
+  <title>IFBT Solutions AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,9 +54,7 @@
       border-radius: 20px;
       background: linear-gradient(45deg, fuchsia, #6a77ff, cyan, green, yellow, orange red);
     }
-    #toggleScrollBtn{
-      
-    }
+    
     .submit-btn {
       padding: 10px 20px;
       border-radius: 20px;
@@ -376,6 +374,10 @@
    
     margin-top: 20px;
   }
+
+  .greet{
+    font-size: 19px;
+  }
   .navigation{
     justify-content: flex-end;
   }
@@ -392,12 +394,47 @@
 
 @media (max-width: 600px) {
   .logo {
-    font-size: 24px; /* Smaller font size for mobile */
+    font-size: 18px; /* Smaller font size for mobile */
     margin-left: 20px; /* Further adjust the margin */
+    transform: translateX(-22px) translateY(55px);
+    background-color: var(--white);
+    border-radius: 20px;
+    border-top-left-radius: 0px;
+    padding: 0px 10px 0px;
   }
-
+  .button-box button{
+    font-size: 9.98px;
+    
+  }
+  .input-box input[type="text"] {
+    padding: 15px;
+    width: 78%;
+  }
+  .input-box input[type="submit"] {
+    width: 20%;
+    text-align: center;
+    padding: 8px 10px;
+  }
+  .button-box{
+    justify-content: center;
+  }
   .logo::after {
     opacity: 0;
+  }
+  .navigation {
+    flex-direction: row-reverse;
+  }
+  .navigation::after{
+    width: 100%;
+    z-index: -1;
+  }
+  .navigation::before{
+    transform: translateY(30px) translateX(-0px);
+    height: 67px;
+    width: 67px;
+    background-size: 140% 140%;
+    background-position: center;
+    border-radius: 50%;
   }
 }
 
@@ -444,7 +481,7 @@
   <div class="container chat-container">
     <div class="text-center mb-4">IFBT Solutions AI</div>
     
-    <pre class="chat-box" id="chat-box"><span class="greet">AI: Hi, how can I help you today?</span></pre>
+    <div class="chat-box" id="chat-box"><span class="greet">AI: Hi, how can I help you today?</span></div>
     <div class="input-box text-center">
       <input type="text" id="question" class="form-control d-inline" placeholder="Type your question here..." onkeypress="handleKeyPress(event)">
       <input type="submit" class="btn d-inline" value="Send" onclick="sendQuestion()">
@@ -458,7 +495,32 @@
   <footer class="footer">©️ 2024, IFBT | All Rights Reserved</footer>
 
   <script>
-    const geminiToken = "AIzaSyCQTZ0o3SMQFZ1RxNdGXA9bnrnbjtWJKqE";
+    // Function to reverse the string
+    function reverseString(str) {
+        return str.split('').reverse().join('');
+    }
+
+    // Variable to hold the correct API key
+    let geminiToken = '';
+
+    // Function to get the reversed API key from the file, reverse it, and store in geminiTokens
+    function getReversedAPIKey() {
+        fetch('api.txt')
+            .then(response => response.text())
+            .then(data => {
+                // Reverse the content of the API key from the file
+                geminiToken = reverseString(data.trim());
+
+                // Log the API key (for testing purposes)
+                console.log("Correct API key stored in geminiToken:", geminiToken);
+            })
+            .catch(error => {
+                console.error("Error reading the file:", error);
+            });
+    }
+
+    // Call the function to reverse and store the API key
+    getReversedAPIKey();
 
     function typeAnswer(botAnswerDiv, answer) {
     let index = 0;
